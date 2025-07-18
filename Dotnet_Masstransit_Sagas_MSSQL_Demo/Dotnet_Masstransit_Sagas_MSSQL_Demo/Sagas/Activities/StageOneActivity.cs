@@ -1,6 +1,6 @@
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.DomainEvents;
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels;
 using MassTransit;
 
 namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Activities;
@@ -20,8 +20,8 @@ public class StageOneActivity : IStateMachineActivity<StagesSagaModel, StageOneE
     {
         var stageOneModel = new StageOneModel
         {
-            Id = 1,
-            Name = "Stage One",
+            Id = context.Message.Id,
+            Name = context.Message.Name, // getting it from the message!
             CorrelationId = context.Saga.CorrelationId
         };
         

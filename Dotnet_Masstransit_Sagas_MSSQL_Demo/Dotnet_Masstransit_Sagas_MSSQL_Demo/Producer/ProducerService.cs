@@ -19,7 +19,8 @@ public class ProducerService
         var evt = new StageOneEvent
         {
             CorrelationId = Guid.NewGuid(),
-            Name = "Hello World"
+            Name = "Hello World",
+            Id = Random.Shared.Next()
         };
 
         _logger.LogWarning("Publishing StageOneEvent with CorrelationId: {EvtCorrelationId}", evt.CorrelationId);

@@ -1,6 +1,6 @@
 ﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.DomainEvents;
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Activities;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels;
 using MassTransit;
 
 namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas;
@@ -29,6 +29,7 @@ public class StagesStateMachine : MassTransitStateMachine<StagesSagaModel>
             {
                 _logger.LogWarning("Kicking off StageOne and Transitioning to StageTwo with {}", context.Saga.CorrelationId);
                 context.Saga.CorrelationId = context.Message.CorrelationId;
+                context.Saga.Id = context.Message.Id;
             }).TransitionTo(StageTwo)
             .Activity(selector => selector.OfType<StageOneActivity>()) // added so it's possible to inject the dbContext and persist StageOneModel
             .Publish(context => new StageTwoEvent

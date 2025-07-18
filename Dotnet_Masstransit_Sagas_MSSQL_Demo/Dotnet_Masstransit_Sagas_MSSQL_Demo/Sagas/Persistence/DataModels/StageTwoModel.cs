@@ -1,6 +1,6 @@
-﻿namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.DomainEvents;
+﻿namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels;
 
-public class StageTwoEvent
+public class StageTwoModel
 {
     public string Description { get; set; } = string.Empty;
     public Guid CorrelationId { get; set; }

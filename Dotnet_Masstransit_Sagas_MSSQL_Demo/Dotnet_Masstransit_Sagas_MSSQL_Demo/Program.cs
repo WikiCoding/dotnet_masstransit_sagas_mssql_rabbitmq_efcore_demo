@@ -1,7 +1,7 @@
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Producer;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,7 +30,7 @@ builder.Services.AddMassTransit(config =>
 
     config.UsingRabbitMq((context, config) =>
     {
-        config.Host(new Uri(builder.Configuration["Broker:Host"] ?? "amqp://localhost:5762"), h =>
+        config.Host(new Uri(builder.Configuration["Broker:Host"] ?? "amqp://localhost:5672"), h =>
         {
             h.Username(builder.Configuration["Broker:Username"] ?? "admin");
             h.Password(builder.Configuration["Broker:Password"] ?? "admin");

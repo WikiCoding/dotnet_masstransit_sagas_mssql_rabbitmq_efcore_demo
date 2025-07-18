@@ -29,7 +29,7 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
                 columns: table => new
                 {
                     CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    id = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CurrentState = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)

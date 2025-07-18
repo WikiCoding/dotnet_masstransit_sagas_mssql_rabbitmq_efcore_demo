@@ -1,4 +1,4 @@
-﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
+﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.StateMaps;
 using MassTransit.EntityFrameworkCoreIntegration;
 using Microsoft.EntityFrameworkCore;
