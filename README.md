@@ -1,8 +1,11 @@
-# Algumas regras
-1. CorrelationId nos vários modelos é obrigatório
-2. A classe da StateMachine, tem de implementar `MassTransitStateMachine<TSagaStateMachineInstance>` e não permite injetar `DbContext` no Construtor por isso precisas de criar uma `Activity` para poderes persistir coisas.
-3. Uma `Activity` tem de ser marcada com `IStateMachineActivity<TSagaStateMachineInstance, TEventThatTriggersIt>`
-4. Por causa do ponto 2, a StateMachine apenas faz tracking da class que esteja marcada como `SagaStateMachineInstance`, que tem como obrigatório o atributo `CorrelationId` e atualiza o seu estado quando se chama o `TransitionTo(...)` . Pelo que li no código que é chamado pela biblioteca, os estados vão sendo atualizados (adicionados ao ChangeTracker) mas é tudo mantido em memória até ao final da Saga e só aí é que é commited. Como isto me parece estranho ser assim, ainda estou a investigar.
-5. É obrigatório criar um `ISagaClassMap` que represente o modelo da `SagaStateMachineInstance` mas não é obrigatório mapear o `CorrelationId`
-6. A DbContext implementar `SagaDbContext` e por isso no override do método Configure tens de devolver a instancia do `ISagaClassMap`
-7. Como tudo tem `CorrelationId` e estou a publicar novos eventos do mesmo tipo que estão registados como `Event<out TMessage>` a saga funciona até ao final. Qualquer coisa que fuja disso, tens de criar consumer à parte, ele tem de consumir a mensagem publicada, fazer o que tem a fazer e publicar novo evento que bata certo com o next step da Saga.
+# Some Rules
+
+*Notes on using a MassTransit Saga State Machine with EF Core.*
+
+1. `CorrelationId` is mandatory in the various models.
+2. The `StateMachine` class must implement `MassTransitStateMachine<TSagaStateMachineInstance>` and does **not** allow injecting `DbContext` in the constructor, so you need to create an `Activity` to persist things.
+3. An `Activity` must be marked with `IStateMachineActivity<TSagaStateMachineInstance, TEventThatTriggersIt>`.
+4. Because of point 2, the `StateMachine` only tracks the class marked as `SagaStateMachineInstance`, which must have the `CorrelationId` property and updates its state when `TransitionTo(...)` is called. From what I read in the code called by the library, the states are updated (added to the `ChangeTracker`) but everything is kept in memory until the end of the Saga, and only then is it committed. Since this behavior seems odd to me, I'm still investigating.
+5. It's mandatory to create an `ISagaClassMap` that represents the `SagaStateMachineInstance` model, but it's not required to map the `CorrelationId`.
+6. The `DbContext` must implement `SagaDbContext`, and therefore in the override of the `Configure` method, you must return the instance of the `ISagaClassMap`.
+7. Since everything has a `CorrelationId` and I'm publishing new events of the same type that are registered as `Event<out TMessage>`, the saga works until the end. Anything outside of that requires creating a separate consumer—it must consume the published message, do what it needs to do, and publish a new event that aligns with the next step of the Saga.
