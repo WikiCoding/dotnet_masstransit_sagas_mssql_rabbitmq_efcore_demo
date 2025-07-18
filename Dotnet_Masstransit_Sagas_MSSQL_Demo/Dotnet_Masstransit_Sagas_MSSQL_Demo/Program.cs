@@ -1,7 +1,7 @@
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Producer;
 using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas;
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.DbContext;
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 

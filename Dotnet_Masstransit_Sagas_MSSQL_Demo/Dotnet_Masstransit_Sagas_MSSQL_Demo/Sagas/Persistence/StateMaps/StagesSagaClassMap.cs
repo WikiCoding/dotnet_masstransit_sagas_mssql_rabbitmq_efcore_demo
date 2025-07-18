@@ -1,4 +1,4 @@
-﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps;
+﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
 using MassTransit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

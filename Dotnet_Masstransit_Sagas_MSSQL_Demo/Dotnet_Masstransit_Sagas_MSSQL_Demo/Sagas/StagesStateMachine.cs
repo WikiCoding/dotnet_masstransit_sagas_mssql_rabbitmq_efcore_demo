@@ -1,5 +1,6 @@
 ﻿using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.DomainEvents;
-using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Domain.Models;
+using Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Activities;
 using MassTransit;
 
 namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas;
@@ -26,9 +27,10 @@ public class StagesStateMachine : MassTransitStateMachine<StagesSagaModel>
         Initially(
             When(StageOneEvent).Then(context =>
             {
-                _logger.LogInformation("Kicking off StageOne and Transitioning to StageTwo with {}", context.Saga.CorrelationId);
+                _logger.LogWarning("Kicking off StageOne and Transitioning to StageTwo with {}", context.Saga.CorrelationId);
                 context.Saga.CorrelationId = context.Message.CorrelationId;
             }).TransitionTo(StageTwo)
+            .Activity(selector => selector.OfType<StageOneActivity>()) // added so it's possible to inject the dbContext and persist StageOneModel
             .Publish(context => new StageTwoEvent
             {
                 CorrelationId = context.Message.CorrelationId,
@@ -37,19 +39,19 @@ public class StagesStateMachine : MassTransitStateMachine<StagesSagaModel>
 
         During(StageTwo, When(StageTwoEvent).Then(context =>
         {
-            _logger.LogInformation("Kicking off StageTwo and Transitioning to StageThree with {}", context.Saga.CorrelationId);
+            _logger.LogWarning("Kicking off StageTwo and Transitioning to StageThree with {}", context.Saga.CorrelationId);
             context.Saga.CorrelationId = context.Message.CorrelationId;
         }).TransitionTo(StageThree)
         .Publish(context => new StageThreeEvent
         {
             CorrelationId = context.Message.CorrelationId,
-            Result = "Deu bom!"
+            Result = "Funcionou bem!"
         })
         );
 
         During(StageThree, When(StageThreeEvent).Then(context =>
         {
-            _logger.LogInformation("Completing saga with {}", context.Saga.CorrelationId);
+            _logger.LogWarning("Completing saga with {}", context.Saga.CorrelationId);
         }).TransitionTo(Final));
     }
 
