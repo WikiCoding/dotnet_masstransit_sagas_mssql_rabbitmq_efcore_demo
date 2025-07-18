@@ -15,13 +15,14 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
                 name: "StageOneModel",
                 columns: table => new
                 {
-                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_StageOneModel", x => x.CorrelationId);
+                    table.PrimaryKey("PK_StageOneModel", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,30 +39,6 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
                 {
                     table.PrimaryKey("PK_StagesSagaModel", x => x.CorrelationId);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "StageThreeModel",
-                columns: table => new
-                {
-                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Result = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StageThreeModel", x => x.CorrelationId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "StageTwoModel",
-                columns: table => new
-                {
-                    CorrelationId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StageTwoModel", x => x.CorrelationId);
-                });
         }
 
         /// <inheritdoc />
@@ -72,12 +49,6 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
 
             migrationBuilder.DropTable(
                 name: "StagesSagaModel");
-
-            migrationBuilder.DropTable(
-                name: "StageThreeModel");
-
-            migrationBuilder.DropTable(
-                name: "StageTwoModel");
         }
     }
 }

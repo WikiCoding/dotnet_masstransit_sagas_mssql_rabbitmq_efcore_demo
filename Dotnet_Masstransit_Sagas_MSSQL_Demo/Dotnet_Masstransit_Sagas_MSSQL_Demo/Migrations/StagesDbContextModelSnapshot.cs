@@ -22,52 +22,27 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps.StageOneModel", b =>
+            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels.StageOneModel", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
                     b.Property<Guid>("CorrelationId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CorrelationId");
+                    b.HasKey("Id");
 
                     b.ToTable("StageOneModel");
                 });
 
-            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps.StageThreeModel", b =>
-                {
-                    b.Property<Guid>("CorrelationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Result")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CorrelationId");
-
-                    b.ToTable("StageThreeModel");
-                });
-
-            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps.StageTwoModel", b =>
-                {
-                    b.Property<Guid>("CorrelationId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("CorrelationId");
-
-                    b.ToTable("StageTwoModel");
-                });
-
-            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.StateMaps.StagesSagaModel", b =>
+            modelBuilder.Entity("Dotnet_Masstransit_Sagas_MSSQL_Demo.Sagas.Persistence.DataModels.StagesSagaModel", b =>
                 {
                     b.Property<Guid>("CorrelationId")
                         .HasColumnType("uniqueidentifier");
@@ -75,6 +50,9 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
                     b.Property<string>("CurrentState")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("RowVersion")
                         .IsConcurrencyToken()
@@ -84,9 +62,6 @@ namespace Dotnet_Masstransit_Sagas_MSSQL_Demo.Migrations
 
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("id")
-                        .HasColumnType("int");
 
                     b.HasKey("CorrelationId");
 

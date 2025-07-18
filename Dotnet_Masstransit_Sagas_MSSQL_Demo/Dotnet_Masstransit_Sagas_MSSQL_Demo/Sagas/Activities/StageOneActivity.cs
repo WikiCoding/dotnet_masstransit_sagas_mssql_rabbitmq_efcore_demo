@@ -20,7 +20,6 @@ public class StageOneActivity : IStateMachineActivity<StagesSagaModel, StageOneE
     {
         var stageOneModel = new StageOneModel
         {
-            Id = context.Message.Id,
             Name = context.Message.Name, // getting it from the message!
             CorrelationId = context.Saga.CorrelationId
         };
